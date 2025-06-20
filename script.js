@@ -1,14 +1,20 @@
+let tasks = []; // array to hold tasks
 // grab the form and the input field from the DOM
 const form = document.getElementById("task-form");
 const taskInput = document.getElementById("task-input");
 
 // creates a new task item with its buttons and adds it to the list
-function createTaskElement(taskName) {
+function createTaskElement(task) {
   const taskList = document.getElementById("task-list");
 
   // basic <li> to hold the task text
   const newTask = document.createElement("li");
-  newTask.textContent = taskName;
+newTask.textContent = task.name;
+
+if (task.completed) {
+  newTask.classList.add("completed");
+}
+
 
   // create both buttons (delete + completed)
   const deleteButton = createDeleteButton(newTask);
@@ -61,7 +67,7 @@ form.addEventListener("submit", function (event) {
 
   // only add if there's something in the input
   if (taskName) {
-    createTaskElement(taskName); // build and add task
+    createTaskElement({ name: taskName, completed: false }); // build and add task
     taskInput.value = ""; // reset input field
   } else {
     alert("Please enter a task name."); // user tried to submit blank
