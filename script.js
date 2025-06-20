@@ -3,34 +3,31 @@ let tasks = []; // array to hold tasks
 const savedTasks = localStorage.getItem("tasks");
 if (savedTasks) {
   tasks = JSON.parse(savedTasks); // parse and load them
-  tasks.forEach(createTaskElement); // recreate each task in the UI
+  tasks.forEach((task, index) => createTaskElement(task, index)); // recreate each task in the UI
 }
 // grab the form and the input field from the DOM
 const form = document.getElementById("task-form");
 const taskInput = document.getElementById("task-input");
 
 // creates a new task item with its buttons and adds it to the list
-function createTaskElement(task) {
+function createTaskElement(task, index) {
   const taskList = document.getElementById("task-list");
 
   // basic <li> to hold the task text
   const newTask = document.createElement("li");
-newTask.textContent = task.name;
-
-if (task.completed) {
-  newTask.classList.add("completed");
-}
-
+  newTask.textContent = task.name;
+  newTask.dataset.index = index; // use passed-in index
+  if (task.completed) {
+    newTask.classList.add("completed");
+  }
 
   // create both buttons (delete + completed)
   const deleteButton = createDeleteButton(newTask);
   const completedButton = createCompletedButton(newTask);
 
-  // attach the buttons to the task
+  // finally, add the task to the visible list
   newTask.appendChild(deleteButton);
   newTask.appendChild(completedButton);
-
-  // finally, add the task to the visible list
   taskList.appendChild(newTask);
 }
 
@@ -73,10 +70,11 @@ form.addEventListener("submit", function (event) {
 
   // only add if there's something in the input
   if (taskName) {
-    createTaskElement({ name: taskName, completed: false }); // build and add task
-    tasks.push({ name: taskName, completed: false }); // store in array
-    localStorage.setItem("tasks", JSON.stringify(tasks)); // save to local storage
-    taskInput.value = ""; // reset input field
+    const newTask = { name: taskName, completed: false };
+    tasks.push(newTask);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    createTaskElement(newTask, tasks.length - 1);
+    taskInput.value = "";
   } else {
     alert("Please enter a task name."); // user tried to submit blank
   }
