@@ -15,7 +15,11 @@ function createTaskElement(task, index) {
 
   // basic <li> to hold the task text
   const newTask = document.createElement("li");
-  newTask.textContent = task.name;
+  const taskText = document.createElement("span");
+  taskText.classList.add("task-text");
+  taskText.textContent = task.name;
+  newTask.appendChild(taskText);
+
   newTask.dataset.index = index; // use passed-in index
   if (task.completed) {
     newTask.classList.add("completed");

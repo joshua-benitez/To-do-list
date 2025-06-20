@@ -3,17 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <title>To-Do List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <div class="app-container">
-      <h1>To-Do List</h1>
-      <form id="task-form">
-        <label for="task-input">New Task:</label>
-        <input type="text" id="task-input" placeholder="Enter a new task" />
-        <button type="submit">Add</button>
-      </form>
-      <ul id="task-list"></ul>
+      <header class="header">
+        <h1 class="title">To-Do List</h1>
+        <hr class="divider" />
+      </header>
+
+      <main>
+        <form id="task-form" class="task-form">
+          <input
+            type="text"
+            id="task-input"
+            placeholder="Type your next task"
+            autocomplete="off"
+          />
+          <button type="submit" class="add-btn">Add</button>
+        </form>
+
+        <ul id="task-list" class="task-list"></ul>
+      </main>
+
+      <footer class="footer">
+        <button id="clear-tasks" class="clear-btn">Clear All</button>
+      </footer>
     </div>
 
     <script src="script.js"></script>
