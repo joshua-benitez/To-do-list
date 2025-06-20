@@ -15,6 +15,18 @@ form.addEventListener("submit", function (event) {
     newTask.textContent = taskName;
     taskList.appendChild(newTask);
 
+    // Create the "Delete" button for the task
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+
+    // When clicked, remove the task (its parent <li>) from the list
+    deleteButton.addEventListener("click", function () {
+      taskList.removeChild(newTask);
+    });
+
+    // Add the delete button to the task item
+    newTask.appendChild(deleteButton);
+
     // Clear the input field after adding the task
     taskInput.value = "";
   } else {
