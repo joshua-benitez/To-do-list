@@ -1,4 +1,10 @@
 let tasks = []; // array to hold tasks
+// check if there are saved tasks in local storage
+const savedTasks = localStorage.getItem("tasks");
+if (savedTasks) {
+  tasks = JSON.parse(savedTasks); // parse and load them
+  tasks.forEach(createTaskElement); // recreate each task in the UI
+}
 // grab the form and the input field from the DOM
 const form = document.getElementById("task-form");
 const taskInput = document.getElementById("task-input");
@@ -68,6 +74,8 @@ form.addEventListener("submit", function (event) {
   // only add if there's something in the input
   if (taskName) {
     createTaskElement({ name: taskName, completed: false }); // build and add task
+    tasks.push({ name: taskName, completed: false }); // store in array
+    localStorage.setItem("tasks", JSON.stringify(tasks)); // save to local storage
     taskInput.value = ""; // reset input field
   } else {
     alert("Please enter a task name."); // user tried to submit blank
