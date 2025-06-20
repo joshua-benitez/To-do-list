@@ -51,12 +51,20 @@ function createCompletedButton(taskElement) {
   btn.textContent = "Completed";
   btn.classList.add("task-btn");
 
-  // toggles strikethrough and updates the button label
   btn.addEventListener("click", () => {
+    const index = taskElement.dataset.index;
+
+    // Toggle visual class
     taskElement.classList.toggle("completed");
-    btn.textContent = taskElement.classList.contains("completed")
-      ? "Undo"
-      : "Completed";
+
+    // Update the task's 'completed' status in the array
+    tasks[index].completed = taskElement.classList.contains("completed");
+
+    // Save updated tasks array
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    // Update button label
+    btn.textContent = tasks[index].completed ? "Undo" : "Completed";
   });
 
   return btn;
