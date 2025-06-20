@@ -40,6 +40,23 @@ function createDeleteButton(taskElement) {
   // removes this specific task when clicked
   btn.addEventListener("click", () => {
     taskElement.remove();
+    const index = taskElement.dataset.index;
+    // remove from the tasks array
+    tasks.splice(index, 1);
+    // update the indices of remaining tasks
+    tasks.forEach((task, i) => {
+      const taskItem = document.querySelector(`li[data-index="${i}"]`);
+      if (taskItem) {
+        taskItem.dataset.index = i; // update index in the DOM
+      }
+    });
+    // save updated tasks array
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    // if the list is empty, show a message
+    if (tasks.length === 0) {
+      const taskList = document.getElementById("task-list");
+      taskList.innerHTML = "<li>No tasks available.</li>";
+    }
   });
 
   return btn;
