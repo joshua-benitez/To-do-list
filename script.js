@@ -97,6 +97,15 @@ form.addEventListener("submit", function (event) {
 
   const taskName = taskInput.value.trim();
 
+  // clear all
+  const clearBtn = document.getElementById("clear-tasks");
+
+  clearBtn.addEventListener("click", () => {
+    tasks = []; // clear the array
+    localStorage.removeItem("tasks"); // clear localStorage
+    document.getElementById("task-list").innerHTML = ""; // clear UI
+  });
+
   // only add if there's something in the input
   if (taskName) {
     const newTask = { name: taskName, completed: false };
